@@ -1,0 +1,74 @@
+import random
+logo = r"""
+.------.            _     _            _    _            _    
+|A_  _ |.          | |   | |          | |  (_)          | |   
+|( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
+| \  /|K /\  |     | '_ \| |/ _` |/ __| |/ / |/ _` |/ __| |/ /
+|  \/ | /  \ |     | |_) | | (_| | (__|   <| | (_| | (__|   < 
+`-----| \  / |     |_.__/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_\\
+      |  \/ K|                            _/ |                
+      `------'                           |__/           
+"""
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+again = True
+while again:
+    player = []
+    Ai = []
+    player_count = ""
+    Ai_count = ""
+    play = input("Do you want to play a game of Blackjack? Type 'y' or 'n'")
+    if play == "y":
+        print (logo)
+        player += ((random.choice(cards))), ((random.choice(cards)))
+        Ai += ((random.choice(cards))), ((random.choice(cards)))
+        print(f"Your cards {player}")
+        print(f"Computer's first card {Ai[0]}")
+        another_round = True
+        while another_round:
+            another_card = input("Type 'y' to get another card, type 'n' to pass")
+            player_count = sum(player)
+            Ai_count = sum(Ai)
+            if another_card == "y":
+                another_round = True
+                player.append((random.choice(cards)))
+                print(player)
+                player_count = sum(player)
+            if player_count == 21:
+                print("BLACKJACK")
+                another_round = False
+            if player_count > 21:
+                print("You went over 21, You lose")
+                another_round = False
+
+            if another_card == "n":
+                another_round = False
+                ai_loop_run = False
+                while sum(Ai) < sum(player):
+                    ai_loop_run = True
+                    Ai.append((random.choice(cards)))
+                    print(f"Computer's  hand {Ai}")
+                    player_count = sum(player)
+                    Ai_count = sum(Ai)
+                    if sum(Ai) == 21:
+                        print("You Lose")
+                    elif sum(Ai) > 21:
+                        print("You Win")
+                    elif sum(Ai) > sum(player) and sum(Ai) < 21:
+                        print("You Lose")
+                    elif sum(Ai) == sum(player) and sum(Ai) <= 15:
+                        Ai.append((random.choice(cards)))
+                        print(f"Computer's  hand {Ai}")
+                        if sum(Ai) == 21:
+                            print("You Lose")
+                        elif sum(Ai) > 21:
+                            print("You Win")
+                    elif sum(Ai) == sum(player):
+                        print ("Tie")
+
+                if not ai_loop_run:
+                    if player_count > Ai_count:
+                        print("You win")
+                    else:
+                        print(f"Computer's hand {Ai}")
+                        print("You lose")
