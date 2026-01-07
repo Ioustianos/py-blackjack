@@ -22,8 +22,13 @@ while again:
         print (logo)
         player += ((random.choice(cards))), ((random.choice(cards)))
         Ai += ((random.choice(cards))), ((random.choice(cards)))
+        while sum(player) > 21 and 11 in player:
+            player[player.index(11)] = 1
         print(f"Your cards {player}")
         print(f"Computer's first card {Ai[0]}")
+        if sum(player) == 21:
+            print("BLACKJACK! You Win!")
+            another_round = False
         another_round = True
         while another_round:
             another_card = input("Type 'y' to get another card, type 'n' to pass")
@@ -32,12 +37,14 @@ while again:
             if another_card == "y":
                 another_round = True
                 player.append((random.choice(cards)))
+                while sum(player) > 21 and 11 in player:
+                    player[player.index(11)] = 1
                 print(player)
                 player_count = sum(player)
-            if player_count == 21:
+            if sum(player) == 21:
                 print("BLACKJACK")
                 another_round = False
-            if player_count > 21:
+            elif sum(player) > 21:
                 print("You went over 21, You lose")
                 another_round = False
 
@@ -47,6 +54,8 @@ while again:
                 while sum(Ai) < sum(player):
                     ai_loop_run = True
                     Ai.append((random.choice(cards)))
+                    while sum(Ai) > 21 and 11 in Ai:
+                        Ai[Ai.index(11)] = 1
                     print(f"Computer's  hand {Ai}")
                     player_count = sum(player)
                     Ai_count = sum(Ai)
@@ -65,10 +74,16 @@ while again:
                             print("You Win")
                     elif sum(Ai) == sum(player):
                         print ("Tie")
+                        break
 
                 if not ai_loop_run:
-                    if player_count > Ai_count:
+                    if sum(player) == sum(Ai):
+                        print(f"Computer's hand {Ai}")
+                        print("Tie")
+                    elif sum(player) > sum(Ai):
+                        print(f"Computer's hand {Ai}")
                         print("You win")
                     else:
                         print(f"Computer's hand {Ai}")
                         print("You lose")
+
